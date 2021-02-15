@@ -198,9 +198,9 @@ add_library(OpenColorIO ${SOURCES})
 
 if(BUILD_SHARED_LIBS AND WIN32)
 	# Impose a versioned name on Windows to avoid binary name clashes.
-    set(OCIO_LIBNAME_SUFFIX
-    	${OCIO_LIBNAME_SUFFIX}_${OpenColorIO_VERSION_MAJOR}_${OpenColorIO_VERSION_MINOR}
-    )
+    #set(OCIO_LIBNAME_SUFFIX
+    #	${OCIO_LIBNAME_SUFFIX}_${OpenColorIO_VERSION_MAJOR}_${OpenColorIO_VERSION_MINOR}
+    #)
 
     # Create the version.rc file for the Windows DLL.
     configure_file(res/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)
@@ -291,11 +291,11 @@ set_target_properties(OpenColorIO PROPERTIES
 
 if(MSVC AND BUILD_SHARED_LIBS)
 	# Install the pdb file if any.
-	install(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
+	install(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION lib OPTIONAL)
 endif()
 
 install(TARGETS OpenColorIO
 	LIBRARY DESTINATION lib
-	RUNTIME DESTINATION bin
+	RUNTIME DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
