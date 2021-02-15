@@ -207,7 +207,7 @@ target_compile_features(OpenColorIO
 
 if(BUILD_SHARED_LIBS AND WIN32)
     # Only use the versioned name with the dynamic library.
-    set(CMAKE_SHARED_LIBRARY_SUFFIX _${OpenColorIO_VERSION_MAJOR}_${OpenColorIO_VERSION_MINOR}.dll)
+    #set(CMAKE_SHARED_LIBRARY_SUFFIX _${OpenColorIO_VERSION_MAJOR}_${OpenColorIO_VERSION_MINOR}.dll)
 
     # Create the version.rc file for the Windows DLL.
     configure_file(res/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)
