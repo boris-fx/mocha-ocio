@@ -12,13 +12,13 @@
 # Targets defined by this module:
 #   IlmBase::Half - IMPORTED target, if found
 #
-# By default, the dynamic libraries of ilmbase will be found. To find the 
-# static ones instead, you must set the Half_STATIC_LIBRARY variable to 
+# By default, the dynamic libraries of ilmbase will be found. To find the
+# static ones instead, you must set the Half_STATIC_LIBRARY variable to
 # TRUE before calling find_package(Half ...).
 #
-# If IlmBase is not installed in a standard path, you can use the 
-# Half_ROOT variable to tell CMake where to find it. If it is not found 
-# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, IlmBase will be 
+# If IlmBase is not installed in a standard path, you can use the
+# Half_ROOT variable to tell CMake where to find it. If it is not found
+# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, IlmBase will be
 # downloaded, built, and statically-linked into libOpenColorIO at build time.
 #
 
@@ -66,7 +66,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
         if(Half_STATIC_LIBRARY)
             # Prefer static lib names
-            set(_Half_STATIC_LIB_NAMES 
+            set(_Half_STATIC_LIB_NAMES
                 "${CMAKE_STATIC_LIBRARY_PREFIX}Half-${_Half_LIB_VER}${CMAKE_STATIC_LIBRARY_SUFFIX}"
                 "${CMAKE_STATIC_LIBRARY_PREFIX}Half${CMAKE_STATIC_LIBRARY_SUFFIX}"
             )
@@ -80,13 +80,13 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
         # Find library
         find_library(Half_LIBRARY
             NAMES
-                ${_Half_STATIC_LIB_NAMES} 
+                ${_Half_STATIC_LIB_NAMES}
                 ${_Half_LIB_NAMES}
             HINTS
                 ${Half_ROOT}
                 ${PC_Half_LIBRARY_DIRS}
             PATH_SUFFIXES
-                lib64 lib 
+                lib64 lib
         )
 
         # Get version from config header file
@@ -99,10 +99,10 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
         endif()
 
         if(_Half_CONFIG)
-            file(STRINGS "${_Half_CONFIG}" _Half_VER_SEARCH 
+            file(STRINGS "${_Half_CONFIG}" _Half_VER_SEARCH
                 REGEX "^[ \t]*#define[ \t]+(OPENEXR|ILMBASE)_VERSION_STRING[ \t]+\"[.0-9]+\".*$")
             if(_Half_VER_SEARCH)
-                string(REGEX REPLACE ".*#define[ \t]+(OPENEXR|ILMBASE)_VERSION_STRING[ \t]+\"([.0-9]+)\".*" 
+                string(REGEX REPLACE ".*#define[ \t]+(OPENEXR|ILMBASE)_VERSION_STRING[ \t]+\"([.0-9]+)\".*"
                     "\\2" Half_VERSION "${_Half_VER_SEARCH}")
             endif()
         elseif(PC_Half_FOUND)
@@ -117,7 +117,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(Half
-        REQUIRED_VARS 
+        REQUIRED_VARS
             ${_Half_REQUIRED_VARS}
         VERSION_VAR
             Half_VERSION
@@ -151,7 +151,7 @@ if(NOT Half_FOUND)
     set(Half_VERSION ${Half_FIND_VERSION})
     set(Half_INCLUDE_DIR "${_EXT_DIST_ROOT}/${CMAKE_INSTALL_INCLUDEDIR}")
 
-    # Set the expected library name. "_d" is appended to Debug Windows builds 
+    # Set the expected library name. "_d" is appended to Debug Windows builds
     # <= OpenEXR 2.3.0. In newer versions, it is appended to Debug libs on
     # all platforms.
     if(BUILD_TYPE_DEBUG AND (WIN32 OR Half_VERSION VERSION_GREATER "2.3.0"))
@@ -171,7 +171,7 @@ if(NOT Half_FOUND)
         endif()
 
         string(STRIP "${Half_CXX_FLAGS}" Half_CXX_FLAGS)
- 
+
         set(Half_CMAKE_ARGS
             ${Half_CMAKE_ARGS}
             -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -180,6 +180,7 @@ if(NOT Half_FOUND)
             -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
             -DCMAKE_INSTALL_PREFIX=${_EXT_DIST_ROOT}
             -DCMAKE_OBJECT_PATH_MAX=${CMAKE_OBJECT_PATH_MAX}
+            -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
             -DBUILD_SHARED_LIBS=OFF
             -DBUILD_TESTING=OFF
             -DOPENEXR_VIEWERS_ENABLE=OFF

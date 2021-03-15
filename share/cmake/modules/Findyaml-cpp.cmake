@@ -12,13 +12,13 @@
 # Targets defined by this module:
 #   yaml-cpp - IMPORTED target, if found
 #
-# By default, the dynamic libraries of yaml-cpp will be found. To find the 
-# static ones instead, you must set the yaml-cpp_STATIC_LIBRARY variable to 
+# By default, the dynamic libraries of yaml-cpp will be found. To find the
+# static ones instead, you must set the yaml-cpp_STATIC_LIBRARY variable to
 # TRUE before calling find_package(yaml-cpp ...).
 #
-# If yaml-cpp is not installed in a standard path, you can use the 
-# yaml-cpp_ROOT variable to tell CMake where to find it. If it is not found 
-# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, yaml-cpp will be 
+# If yaml-cpp is not installed in a standard path, you can use the
+# yaml-cpp_ROOT variable to tell CMake where to find it. If it is not found
+# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, yaml-cpp will be
 # downloaded, built, and statically-linked into libOpenColorIO at build time.
 #
 
@@ -45,15 +45,15 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
         # Search for yaml-cpp.pc
         find_package(PkgConfig QUIET)
         pkg_check_modules(PC_yaml-cpp QUIET "yaml-cpp>=${yaml-cpp_FIND_VERSION}")
-        
+
         # Find include directory
-        find_path(yaml-cpp_INCLUDE_DIR 
+        find_path(yaml-cpp_INCLUDE_DIR
             NAMES
                 yaml-cpp/yaml.h
             HINTS
                 ${yaml-cpp_ROOT}
                 ${PC_yaml-cpp_INCLUDE_DIRS}
-            PATH_SUFFIXES 
+            PATH_SUFFIXES
                 include
                 yaml-cpp/include
         )
@@ -70,7 +70,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
             if(WIN32)
                 set(_yaml-cpp_LIB_SUFFIX "md")
             endif()
-            set(_yaml-cpp_STATIC_LIB_NAMES 
+            set(_yaml-cpp_STATIC_LIB_NAMES
                 "libyaml-cpp${_yaml-cpp_LIB_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
             if(WIN32 AND BUILD_TYPE_DEBUG)
                 # Prefer static Debug lib names (Windows only)
@@ -81,13 +81,13 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
         # Find library
         find_library(yaml-cpp_LIBRARY
-            NAMES 
+            NAMES
                 ${_yaml-cpp_STATIC_LIB_NAMES}
                 ${_yaml-cpp_LIB_NAMES}
-            HINTS 
+            HINTS
                 ${_yaml-cpp_ROOT}
                 ${PC_yaml-cpp_LIBRARY_DIRS}
-            PATH_SUFFIXES 
+            PATH_SUFFIXES
                 lib64 lib
         )
 
@@ -104,7 +104,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(yaml-cpp
-        REQUIRED_VARS 
+        REQUIRED_VARS
             ${_yaml-cpp_REQUIRED_VARS}
         VERSION_VAR
             yaml-cpp_VERSION
@@ -133,8 +133,8 @@ if(NOT yaml-cpp_FOUND)
         set(CMAKE_OSX_DEPLOYMENT_TARGET ${CMAKE_OSX_DEPLOYMENT_TARGET})
     endif()
 
-    # TODO: yaml-cpp master is using GNUInstallDirs to define include and lib 
-    #       dir names. Once that change is released and OCIO updates the 
+    # TODO: yaml-cpp master is using GNUInstallDirs to define include and lib
+    #       dir names. Once that change is released and OCIO updates the
     #       minimum yaml-cpp version, toggle the three disabled lines below.
     #include(GNUInstallDirs)
 
@@ -181,6 +181,7 @@ if(NOT yaml-cpp_FOUND)
             -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
             -DCMAKE_INSTALL_PREFIX=${_EXT_DIST_ROOT}
             -DCMAKE_OBJECT_PATH_MAX=${CMAKE_OBJECT_PATH_MAX}
+            -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
             -DBUILD_SHARED_LIBS=OFF
             -DYAML_BUILD_SHARED_LIBS=OFF
             -DYAML_CPP_BUILD_TESTS=OFF

@@ -11,13 +11,13 @@
 # Targets defined by this module:
 #   pystring::pystring - IMPORTED target, if found
 #
-# By default, the dynamic libraries of pystring will be found. To find the 
-# static ones instead, you must set the pystring_STATIC_LIBRARY variable to 
+# By default, the dynamic libraries of pystring will be found. To find the
+# static ones instead, you must set the pystring_STATIC_LIBRARY variable to
 # TRUE before calling find_package(pystring ...).
 #
-# If pystring is not installed in a standard path, you can use the 
-# pystring_ROOT variable to tell CMake where to find it. If it is not found 
-# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, pystring will be 
+# If pystring is not installed in a standard path, you can use the
+# pystring_ROOT variable to tell CMake where to find it. If it is not found
+# and OCIO_INSTALL_EXT_PACKAGES is set to MISSING or ALL, pystring will be
 # downloaded, built, and statically-linked into libOpenColorIO at build time.
 #
 
@@ -43,7 +43,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
     # Attempt to find static library first if this is set
     if(pystring_STATIC_LIBRARY)
-        set(_pystring_STATIC 
+        set(_pystring_STATIC
             "${CMAKE_STATIC_LIBRARY_PREFIX}pystring${CMAKE_STATIC_LIBRARY_SUFFIX}")
     endif()
 
@@ -54,7 +54,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
         HINTS
             ${_pystring_SEARCH_DIRS}
         PATH_SUFFIXES
-            lib64 lib 
+            lib64 lib
     )
 
     # Override REQUIRED if package can be installed
@@ -64,8 +64,8 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(pystring
-        REQUIRED_VARS 
-            pystring_INCLUDE_DIR 
+        REQUIRED_VARS
+            pystring_INCLUDE_DIR
             pystring_LIBRARY
     )
     set(pystring_FOUND ${pystring_FOUND})
@@ -88,7 +88,7 @@ if(NOT pystring_FOUND)
     set(pystring_FOUND TRUE)
     set(pystring_VERSION ${pystring_FIND_VERSION})
     set(pystring_INCLUDE_DIR "${_EXT_DIST_ROOT}/include")
-    set(pystring_LIBRARY 
+    set(pystring_LIBRARY
         "${_EXT_DIST_ROOT}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pystring${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
     if(_pystring_TARGET_CREATE)
@@ -113,6 +113,7 @@ if(NOT pystring_FOUND)
             -DCMAKE_INSTALL_MESSAGE=${CMAKE_INSTALL_MESSAGE}
             -DCMAKE_INSTALL_PREFIX=${_EXT_DIST_ROOT}
             -DCMAKE_OBJECT_PATH_MAX=${CMAKE_OBJECT_PATH_MAX}
+            -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
         )
         if(CMAKE_TOOLCHAIN_FILE)
             set(pystring_CMAKE_ARGS
