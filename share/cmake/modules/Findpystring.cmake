@@ -44,7 +44,7 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
         HINTS
             ${_pystring_SEARCH_DIRS}
         PATH_SUFFIXES
-            lib64 lib 
+            lib64 lib
     )
 
     # Override REQUIRED if package can be installed
@@ -54,8 +54,8 @@ if(NOT OCIO_INSTALL_EXT_PACKAGES STREQUAL ALL)
 
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(pystring
-        REQUIRED_VARS 
-            pystring_INCLUDE_DIR 
+        REQUIRED_VARS
+            pystring_INCLUDE_DIR
             pystring_LIBRARY
     )
     set(pystring_FOUND ${pystring_FOUND})
@@ -99,6 +99,7 @@ if(NOT pystring_FOUND)
             -DCMAKE_INSTALL_LIBDIR=${CMAKE_INSTALL_LIBDIR}
             -DCMAKE_INSTALL_INCLUDEDIR=${CMAKE_INSTALL_INCLUDEDIR}
             -DCMAKE_OBJECT_PATH_MAX=${CMAKE_OBJECT_PATH_MAX}
+            -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
         )
 
         if(CMAKE_TOOLCHAIN_FILE)
